@@ -59,7 +59,6 @@ function Index() {
             <Link
               key={g.key}
               to="/results"
-              search={{ goal: g.key }}
               className="rounded-2xl bg-card border border-border p-4 shadow-sm flex items-center gap-3 active:scale-[0.98] transition hover:border-primary/40"
             >
               <span className="text-2xl">{g.emoji}</span>
