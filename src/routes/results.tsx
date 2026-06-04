@@ -17,13 +17,13 @@ function Results() {
   return (
     <PhoneShell>
       <AppHeader title="Your shots" subtitle="Picked for how you feel right now" />
-      <div className="px-5 space-y-3">
+      <div className="px-5 md:px-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-5">
         {MORE.map((s) => (
           <Link
             key={s.slug}
             to="/shot/$slug"
             params={{ slug: s.slug }}
-            className="block rounded-2xl bg-card border border-border p-4 shadow-sm active:scale-[0.99] transition"
+            className="block rounded-2xl bg-card border border-border p-4 md:p-5 shadow-sm active:scale-[0.99] transition hover:shadow-md hover:border-primary/40"
           >
             <div className="flex items-center gap-4">
               <div className="h-14 w-14 rounded-xl bg-secondary/50 flex items-center justify-center text-2xl shrink-0">
