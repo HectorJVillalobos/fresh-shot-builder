@@ -13,7 +13,7 @@ function ShotTender() {
   return (
     <PhoneShell>
       <AppHeader title="Shot-Tender" subtitle="Tell me how you feel — I'll mix you something." />
-      <div className="px-5">
+      <div className="px-5 md:px-10 md:max-w-2xl md:mx-auto w-full">
         <div className="rounded-2xl bg-card border border-border p-5 shadow-sm">
           <label className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
             How are you feeling?
