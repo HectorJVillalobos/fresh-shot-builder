@@ -9,10 +9,16 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ShotTenderRouteImport } from './routes/shot-tender'
 import { Route as ResultsRouteImport } from './routes/results'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ShotSlugRouteImport } from './routes/shot.$slug'
 
+const ShotTenderRoute = ShotTenderRouteImport.update({
+  id: '/shot-tender',
+  path: '/shot-tender',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ResultsRoute = ResultsRouteImport.update({
   id: '/results',
   path: '/results',
@@ -32,35 +38,46 @@ const ShotSlugRoute = ShotSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/results': typeof ResultsRoute
+  '/shot-tender': typeof ShotTenderRoute
   '/shot/$slug': typeof ShotSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/results': typeof ResultsRoute
+  '/shot-tender': typeof ShotTenderRoute
   '/shot/$slug': typeof ShotSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/results': typeof ResultsRoute
+  '/shot-tender': typeof ShotTenderRoute
   '/shot/$slug': typeof ShotSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/results' | '/shot/$slug'
+  fullPaths: '/' | '/results' | '/shot-tender' | '/shot/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/results' | '/shot/$slug'
-  id: '__root__' | '/' | '/results' | '/shot/$slug'
+  to: '/' | '/results' | '/shot-tender' | '/shot/$slug'
+  id: '__root__' | '/' | '/results' | '/shot-tender' | '/shot/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ResultsRoute: typeof ResultsRoute
+  ShotTenderRoute: typeof ShotTenderRoute
   ShotSlugRoute: typeof ShotSlugRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/shot-tender': {
+      id: '/shot-tender'
+      path: '/shot-tender'
+      fullPath: '/shot-tender'
+      preLoaderRoute: typeof ShotTenderRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/results': {
       id: '/results'
       path: '/results'
@@ -88,6 +105,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ResultsRoute: ResultsRoute,
+  ShotTenderRoute: ShotTenderRoute,
   ShotSlugRoute: ShotSlugRoute,
 }
 export const routeTree = rootRouteImport
