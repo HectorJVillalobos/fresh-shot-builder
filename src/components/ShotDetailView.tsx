@@ -53,9 +53,9 @@ export function ShotDetailView({
               className="h-full w-full object-cover"
               width={800}
               height={800}
-              initial={{ scale: 1.15 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 1.2, ease: "easeOut" }}
+              initial={{ scale: 1.25 }}
+              animate={{ scale: [1.25, 1.05, 1.1, 1.05] }}
+              transition={{ duration: 8, ease: "easeInOut", repeat: Infinity, repeatType: "reverse" }}
             />
           ) : (
             <span className="text-8xl">{shot.emoji}</span>
@@ -112,17 +112,30 @@ export function ShotDetailView({
         >
           {[
             <div key="title" className="flex items-center gap-2">
-              <span className="text-2xl md:text-3xl">{shot.emoji}</span>
+              <motion.span
+                className="text-2xl md:text-3xl inline-block"
+                animate={{ y: [0, -6, 0], rotate: [0, -8, 8, 0] }}
+                transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+              >
+                {shot.emoji}
+              </motion.span>
               <h1 className="text-2xl md:text-4xl font-bold tracking-tight">{shot.name}</h1>
             </div>,
             <p key="benefit" className="text-sm md:text-base text-muted-foreground mt-1 md:mt-2">{shot.benefit}</p>,
-            <p key="base" className="text-sm md:text-base font-medium text-primary mt-2">Base · {shot.base}</p>,
+            <p key="base" className="text-sm md:text-base font-medium text-primary mt-2 flex items-center gap-2">
+              <motion.span
+                className="inline-block h-2 w-2 rounded-full bg-primary"
+                animate={{ scale: [1, 1.6, 1], opacity: [1, 0.4, 1] }}
+                transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+              />
+              Base · {shot.base}
+            </p>,
           ].map((child, i) => (
             <motion.div
               key={i}
               variants={{
-                hidden: { opacity: 0, y: 14 },
-                show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
+                hidden: { opacity: 0, y: 30 },
+                show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
               }}
             >
               {child}
