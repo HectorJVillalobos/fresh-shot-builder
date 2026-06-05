@@ -1,7 +1,9 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { Link } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { PhoneShell, AppHeader } from "@/components/PhoneShell";
-import { FEATURED, GOALS } from "@/lib/shots";
+import { GOALS } from "@/data/goals";
+import { shots } from "@/data/shots";
+
+const FEATURED = shots.slice(0, 4);
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -25,9 +27,9 @@ function Index() {
         <div className="flex gap-4 md:gap-6 overflow-x-auto pb-4 pr-5 md:pr-10 snap-x snap-mandatory scrollbar-none">
           {FEATURED.map((s) => (
             <Link
-              key={s.slug}
+              key={s.id}
               to="/shot/$slug"
-              params={{ slug: s.slug }}
+              params={{ slug: s.id }}
               className="snap-start shrink-0 w-64 md:w-[calc((100%-3rem)/4)] rounded-2xl bg-card border border-border shadow-sm overflow-hidden active:scale-[0.99] transition hover:shadow-md"
             >
               <div className="aspect-square bg-secondary/40 flex items-center justify-center overflow-hidden">
@@ -59,6 +61,7 @@ function Index() {
             <Link
               key={g.key}
               to="/results"
+              search={{ goal: g.key }}
               className="rounded-2xl bg-card border border-border p-4 md:p-5 shadow-sm flex items-center gap-3 active:scale-[0.98] transition hover:border-primary/40 hover:shadow-md"
             >
               <span className="text-2xl md:text-3xl">{g.emoji}</span>

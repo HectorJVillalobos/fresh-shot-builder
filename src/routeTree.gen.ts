@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ShotTenderRouteImport } from './routes/shot-tender'
 import { Route as ResultsRouteImport } from './routes/results'
+import { Route as FavoritesRouteImport } from './routes/favorites'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ShotSlugRouteImport } from './routes/shot.$slug'
 
@@ -22,6 +23,11 @@ const ShotTenderRoute = ShotTenderRouteImport.update({
 const ResultsRoute = ResultsRouteImport.update({
   id: '/results',
   path: '/results',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FavoritesRoute = FavoritesRouteImport.update({
+  id: '/favorites',
+  path: '/favorites',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -37,12 +43,14 @@ const ShotSlugRoute = ShotSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/favorites': typeof FavoritesRoute
   '/results': typeof ResultsRoute
   '/shot-tender': typeof ShotTenderRoute
   '/shot/$slug': typeof ShotSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/favorites': typeof FavoritesRoute
   '/results': typeof ResultsRoute
   '/shot-tender': typeof ShotTenderRoute
   '/shot/$slug': typeof ShotSlugRoute
@@ -50,20 +58,28 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/favorites': typeof FavoritesRoute
   '/results': typeof ResultsRoute
   '/shot-tender': typeof ShotTenderRoute
   '/shot/$slug': typeof ShotSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/results' | '/shot-tender' | '/shot/$slug'
+  fullPaths: '/' | '/favorites' | '/results' | '/shot-tender' | '/shot/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/results' | '/shot-tender' | '/shot/$slug'
-  id: '__root__' | '/' | '/results' | '/shot-tender' | '/shot/$slug'
+  to: '/' | '/favorites' | '/results' | '/shot-tender' | '/shot/$slug'
+  id:
+    | '__root__'
+    | '/'
+    | '/favorites'
+    | '/results'
+    | '/shot-tender'
+    | '/shot/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  FavoritesRoute: typeof FavoritesRoute
   ResultsRoute: typeof ResultsRoute
   ShotTenderRoute: typeof ShotTenderRoute
   ShotSlugRoute: typeof ShotSlugRoute
@@ -85,6 +101,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResultsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/favorites': {
+      id: '/favorites'
+      path: '/favorites'
+      fullPath: '/favorites'
+      preLoaderRoute: typeof FavoritesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -104,6 +127,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  FavoritesRoute: FavoritesRoute,
   ResultsRoute: ResultsRoute,
   ShotTenderRoute: ShotTenderRoute,
   ShotSlugRoute: ShotSlugRoute,
@@ -111,3 +135,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

@@ -1,0 +1,20 @@
+# Project: Wellness Shot Recommender (hackathon, mobile-first web)
+## Stack
+- Vite + React + TypeScript + Tailwind. NOT Next.js.
+- Built on an existing Lovable shell; build on top, don't rebuild or rescaffold.
+- No database, no Supabase, no auth, no login. Only server code is ONE Vercel
+  serverless function for the AI feature.
+## Data
+- All catalog data is static in src/data/shots.ts. No backend fetch for catalog.
+## Code
+- Functional components + hooks, named exports, files <150 lines.
+- Keep the app runnable and `npm run build` clean after every change.
+## Design
+- Mobile-first AND adaptive: great at ~390px, expands to a centered max-w-5xl
+  layout on desktop. Never a stranded narrow column.
+- White/off-white bg, fresh green primary, soft green accents, rounded-2xl.
+## Secrets
+- API keys NEVER in the repo. .env.local stays gitignored; real key lives in
+  Vercel env vars; the function reads process.env.ANTHROPIC_API_KEY.
+## Bias
+- Hackathon: prioritize a working, deployable build. Never leave it broken.
