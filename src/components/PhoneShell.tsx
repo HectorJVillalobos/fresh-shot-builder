@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
 import { Home, Sparkles, MessageCircle, Heart } from "lucide-react";
+import { motion } from "framer-motion";
 
 const TABS = [
   { to: "/", label: "Home", icon: Home },
@@ -87,8 +88,54 @@ export function AppHeader({ title, subtitle }: { title?: string; subtitle?: stri
           </nav>
         </div>
       </div>
-      {title && <h1 className="mt-6 md:mt-10 text-2xl md:text-4xl font-bold tracking-tight">{title}</h1>}
-      {subtitle && <p className="mt-1 md:mt-2 text-sm md:text-base text-muted-foreground">{subtitle}</p>}
+      {title && <AnimatedTitle text={title} />}
+      {subtitle && (
+        <motion.p
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.05 + title!.length * 0.04 }}
+          className="mt-1 md:mt-2 text-sm md:text-base text-muted-foreground"
+        >
+          {subtitle}
+        </motion.p>
+      )}
     </header>
+  );
+}
+
+function AnimatedTitle({ text }: { text: string }) {
+  const words = text.split(" ");
+  return (
+    <motion.h1
+      initial="hidden"
+      animate="show"
+      variants={{ hidden: {}, show: { transition: { staggerChildren: 0.08, delayChildren: 0.1 } } }}
+      className="mt-6 md:mt-10 text-3xl md:text-5xl font-bold tracking-tight leading-[1.05] flex flex-wrap gap-x-3"
+    >
+      {words.map((word, wi) => (
+        <span key={wi} className="inline-flex overflow-hidden pb-1">
+          {word.split("").map((char, ci) => (
+            <motion.span
+              key={ci}
+              variants={{
+                hidden: { y: "110%", opacity: 0 },
+                show: {
+                  y: "0%",
+                  opacity: 1,
+                  transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
+                },
+              }}
+              className={`inline-block ${
+                wi === words.length - 1
+                  ? "bg-gradient-to-br from-primary via-primary to-primary/60 bg-clip-text text-transparent italic"
+                  : ""
+              }`}
+            >
+              {char}
+            </motion.span>
+          ))}
+        </span>
+      ))}
+    </motion.h1>
   );
 }

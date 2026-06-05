@@ -47,15 +47,12 @@ export function ShotDetailView({
       >
         <div className="aspect-[4/3] md:aspect-square bg-secondary/40 overflow-hidden flex items-center justify-center">
           {shot.image ? (
-            <motion.img
+            <img
               src={shot.image}
               alt={shot.name}
               className="h-full w-full object-cover"
               width={800}
               height={800}
-              initial={{ scale: 1.25 }}
-              animate={{ scale: [1.25, 1.05, 1.1, 1.05] }}
-              transition={{ duration: 8, ease: "easeInOut", repeat: Infinity, repeatType: "reverse" }}
             />
           ) : (
             <span className="text-8xl">{shot.emoji}</span>
@@ -112,13 +109,7 @@ export function ShotDetailView({
         >
           {[
             <div key="title" className="flex items-center gap-2">
-              <motion.span
-                className="text-2xl md:text-3xl inline-block"
-                animate={{ y: [0, -6, 0], rotate: [0, -8, 8, 0] }}
-                transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
-              >
-                {shot.emoji}
-              </motion.span>
+              <span className="text-2xl md:text-3xl">{shot.emoji}</span>
               <h1 className="text-2xl md:text-4xl font-bold tracking-tight">{shot.name}</h1>
             </div>,
             <p key="benefit" className="text-sm md:text-base text-muted-foreground mt-1 md:mt-2">{shot.benefit}</p>,
