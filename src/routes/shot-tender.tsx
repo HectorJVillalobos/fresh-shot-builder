@@ -1,9 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { ShotTenderTitle } from "@/components/AnimatedRevealTitle";
 import { PhoneShell, AppHeader } from "@/components/PhoneShell";
 import { ShotDetailView } from "@/components/ShotDetailView";
 import type { Shot } from "@/data/shots";
-import { Sparkles, Loader2 } from "lucide-react";
+import { MixingShotLoader } from "@/components/MixingShotLoader";
+import { Sparkles } from "lucide-react";
 
 const DISCLAIMER =
   "Wellness suggestions only — not medical advice. Consult a professional for health concerns.";
@@ -48,7 +50,10 @@ function ShotTender() {
 
   return (
     <PhoneShell>
-      <AppHeader title="Shot-Tender" subtitle="Tell me how you feel — I'll mix you something." />
+      <AppHeader
+        title={<ShotTenderTitle />}
+        subtitle="Tell me how you feel — I'll mix you something."
+      />
       <div className="px-5 md:px-10 md:max-w-2xl md:mx-auto w-full">
         <div className="rounded-2xl bg-card border border-border p-5 shadow-sm">
           <label htmlFor="feeling" className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
@@ -67,13 +72,15 @@ function ShotTender() {
             onClick={() => void askTender()}
             className="mt-4 w-full rounded-2xl bg-primary text-primary-foreground font-semibold py-4 flex items-center justify-center gap-2 shadow-sm active:scale-[0.99] transition disabled:opacity-60"
           >
-            {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />}
+            <Sparkles className="h-4 w-4" />
             {loading ? "Mixing your shot…" : "Ask the Shot-Tender"}
           </button>
           {error ? <p className="mt-3 text-sm text-destructive">{error}</p> : null}
         </div>
 
         <p className="mt-4 text-xs text-muted-foreground px-1">{DISCLAIMER}</p>
+
+        {loading ? <MixingShotLoader /> : null}
 
         {!customShot && !loading ? (
           <div className="mt-5 rounded-2xl bg-secondary/40 p-4">

@@ -42,7 +42,7 @@ function Favorites() {
                 key={s.id}
                 to="/shot/$slug"
                 params={{ slug: s.id }}
-                className="block rounded-2xl bg-card border border-border p-4 md:p-5 shadow-sm active:scale-[0.99] transition hover:shadow-md hover:border-primary/40"
+                className="relative block rounded-2xl bg-card border border-border p-4 md:p-5 shadow-sm transition-all duration-200 ease-out hover:scale-105 hover:border-primary hover:shadow-lg hover:z-10 active:scale-[0.99]"
               >
                 <div className="flex items-center gap-4">
                   <div className="h-14 w-14 rounded-xl bg-secondary/50 flex items-center justify-center text-2xl shrink-0">

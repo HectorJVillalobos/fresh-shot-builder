@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { motion } from "framer-motion";
+import { MorningTitle } from "@/components/AnimatedRevealTitle";
 import { PhoneShell, AppHeader } from "@/components/PhoneShell";
 import { GOALS } from "@/data/goals";
 import { shots } from "@/data/shots";
@@ -19,35 +19,40 @@ export const Route = createFileRoute("/")({
 function Index() {
   return (
     <PhoneShell>
-      <AppHeader title="Good morning" subtitle="What does your body need today?" />
+      <AppHeader title={<MorningTitle />} compact />
 
-      <section className="pl-5 md:pl-10 mt-2 md:mt-4">
+      <section className="px-5 md:px-10 -mt-1 md:mt-0">
+        <h2 className="text-lg md:text-2xl font-bold tracking-tight mb-3 md:mb-5">
+          Miami! How tf we feeling?!
+        </h2>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
+          {GOALS.map((g) => (
+            <Link
+              key={g.key}
+              to="/results"
+              search={{ goal: g.key }}
+              className="relative rounded-2xl bg-card border border-border p-4 md:p-5 shadow-sm flex items-center gap-3 transition-all duration-200 ease-out hover:scale-105 hover:border-primary hover:shadow-lg hover:z-10 active:scale-[0.98]"
+            >
+              <span className="text-2xl md:text-3xl">{g.emoji}</span>
+              <span className="font-semibold md:text-lg">{g.label}</span>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <section className="pl-5 md:pl-10 mt-6 md:mt-10">
         <div className="flex items-baseline justify-between pr-5 md:pr-10 mb-3 md:mb-5">
           <h2 className="text-sm md:text-base font-semibold tracking-wide uppercase text-muted-foreground">Featured shots</h2>
         </div>
-        <motion.div
-          initial="hidden"
-          animate="show"
-          variants={{ hidden: {}, show: { transition: { staggerChildren: 0.1, delayChildren: 0.1 } } }}
-          className="flex gap-4 md:gap-6 overflow-x-auto pb-4 pr-5 md:pr-10 snap-x snap-mandatory scrollbar-none"
-        >
+        <div className="flex gap-4 md:gap-6 overflow-x-auto py-3 pb-4 pr-5 md:pr-10 snap-x snap-mandatory scrollbar-none">
           {FEATURED.map((s) => (
-            <motion.div
+            <Link
               key={s.id}
-              variants={{
-                hidden: { opacity: 0, y: 24, scale: 0.96 },
-                show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
-              }}
-              whileHover={{ y: -4 }}
-              whileTap={{ scale: 0.98 }}
-              className="snap-start shrink-0 w-64 md:w-[calc((100%-3rem)/4)]"
+              to="/shot/$slug"
+              params={{ slug: s.id }}
+              className="snap-start shrink-0 w-64 md:w-[calc((100%-3rem)/4)] relative rounded-2xl bg-card border border-border shadow-sm transition-all duration-200 ease-out hover:scale-105 hover:border-primary hover:shadow-lg hover:z-10 active:scale-[0.99]"
             >
-              <Link
-                to="/shot/$slug"
-                params={{ slug: s.id }}
-                className="block rounded-2xl bg-card border border-border shadow-sm overflow-hidden transition hover:shadow-md"
-              >
-              <div className="aspect-square bg-secondary/40 flex items-center justify-center overflow-hidden">
+              <div className="aspect-square rounded-t-2xl bg-secondary/40 flex items-center justify-center overflow-hidden">
                 {s.image ? (
                   <img src={s.image} alt={s.name} loading="lazy" width={512} height={512} className="h-full w-full object-cover" />
                 ) : (
@@ -62,48 +67,9 @@ function Index() {
                 <p className="mt-1.5 text-xs md:text-sm text-muted-foreground line-clamp-2">{s.benefit}</p>
                 <p className="mt-2 text-xs md:text-sm font-medium text-primary">{s.base}</p>
               </div>
-              </Link>
-            </motion.div>
+            </Link>
           ))}
-        </motion.div>
-      </section>
-
-      <section className="px-5 md:px-10 mt-4 md:mt-10">
-        <h2 className="text-sm md:text-base font-semibold tracking-wide uppercase text-muted-foreground mb-3 md:mb-5">
-          How do you feel?
-        </h2>
-        <motion.div
-          initial="hidden"
-          animate="show"
-          variants={{ hidden: {}, show: { transition: { staggerChildren: 0.05, delayChildren: 0.3 } } }}
-          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4"
-        >
-          {GOALS.map((g) => (
-            <motion.div
-              key={g.key}
-              variants={{
-                hidden: { opacity: 0, y: 16 },
-                show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } },
-              }}
-              whileHover={{ y: -2 }}
-              whileTap={{ scale: 0.97 }}
-            >
-              <Link
-                to="/results"
-                search={{ goal: g.key }}
-                className="rounded-2xl bg-card border border-border p-4 md:p-5 shadow-sm flex items-center gap-3 transition hover:border-primary/40 hover:shadow-md"
-              >
-                <motion.span
-                  className="text-2xl md:text-3xl"
-                  whileHover={{ rotate: [0, -10, 10, -6, 0], transition: { duration: 0.6 } }}
-                >
-                  {g.emoji}
-                </motion.span>
-                <span className="font-semibold md:text-lg">{g.label}</span>
-              </Link>
-            </motion.div>
-          ))}
-        </motion.div>
+        </div>
       </section>
     </PhoneShell>
   );

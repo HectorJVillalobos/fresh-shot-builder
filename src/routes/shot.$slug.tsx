@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { PhoneShell } from "@/components/PhoneShell";
+import { PhoneShell, AppHeader } from "@/components/PhoneShell";
 import { ShotDetailView } from "@/components/ShotDetailView";
 import { shots } from "@/data/shots";
 
@@ -32,6 +32,7 @@ function ShotDetail() {
 
   return (
     <PhoneShell>
+      <AppHeader />
       <ShotDetailView
         shot={shot}
         backTo="/results"
