@@ -5,7 +5,7 @@ A Miami-themed wellness-shot recommender: pick a goal or mood, browse matched sh
 ## Stack
 
 - **Vite** + **React** + **TypeScript** + **Tailwind CSS**
-- Built on a Lovable-generated shell (TanStack Router / Start) — extended in place, not rescaffolded
+- TanStack Router / Start on Vite — extended in place, not rescaffolded
 - Static catalog in `src/data/shots.ts` (no database)
 - One Vercel serverless function (`api/shottender.ts`) for the AI feature
 
@@ -50,12 +50,12 @@ npm run build   # production build — should stay clean
 
 ## Built with Cursor
 
-This project was extended and wired up using **Cursor** on top of the Lovable starter.
+This project was extended and wired up using **Cursor**.
 
 ## Status / what's next
 
 **Done:** goal-based results, shot detail with per-ingredient “why” lines and swaps, `localStorage` favorites, mobile-first layout up to `max-w-5xl` on desktop, and Shot-Tender (`POST /api/shottender` with `claude-haiku-4-5`).
 
-**Deploy:** push to Vercel, set `ANTHROPIC_API_KEY` in project env, use `vercel dev` to test the API locally. Static app serves from `dist/client` after `npm run build`.
+**Deploy:** TanStack Start needs Nitro for Vercel (see `vite.config.ts` → `nitro: { preset: "vercel" }`). Push to GitHub, import the repo in [Vercel](https://vercel.com), set **Node 22**, and add `ANTHROPIC_API_KEY` in project env. Build command: `npm run build` (Nitro writes `.vercel/output`; do not set a static `outputDirectory`). Redeploy after env changes. Test Shot-Tender with `POST /api/shottender`.
 
 **Nice-to-have:** shot photos in the catalog, deep links with goal pre-selected, and a Vite dev proxy to `/api/shottender` for local-only testing without the Vercel CLI.
