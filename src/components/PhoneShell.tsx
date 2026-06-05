@@ -59,26 +59,7 @@ export function AppHeader({
           </div>
           <span className="font-bold tracking-tight text-lg md:text-xl">freshshot</span>
         </Link>
-        <div className="flex items-center gap-2">
-          <Link
-            to="/favorites"
-            className={`hidden md:flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-              path === "/favorites" ? "bg-secondary text-primary" : "text-muted-foreground hover:text-foreground"
-            }`}
-          >
-            <Heart className="h-4 w-4" />
-            Favorites
-          </Link>
-          <Link
-            to="/favorites"
-            className={`md:hidden h-9 w-9 rounded-full flex items-center justify-center ${
-              path === "/favorites" ? "bg-secondary text-primary" : "text-muted-foreground"
-            }`}
-            aria-label="Favorites"
-          >
-            <Heart className="h-5 w-5" />
-          </Link>
-          <nav className="hidden md:flex items-center gap-1">
+        <nav className="hidden md:flex items-center gap-1">
             {TABS.map(({ to, label, icon: Icon }) => {
               const active = to === "/" ? path === "/" : path.startsWith(to);
               return (
@@ -94,8 +75,7 @@ export function AppHeader({
                 </Link>
               );
             })}
-          </nav>
-        </div>
+        </nav>
       </div>
       {title &&
         (typeof title === "string" ? (
